@@ -1,0 +1,21 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: 0oa1ioo602GvT0FvA357
+            client-secret: E11qKMGw_jVAmxEXJx-IrAbxLkRcykRgAvxSCTLN
+            scope: openid, email, profile
+        provider:
+          okta:
+            issuer-uri: https://dev-456923.okta.com/oauth2/default
+  datasource:
+    url: jdbc:mysql://localhost/springdb
+    username: admin
+    password: login
+    initialization-mode: always
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: create-drop
