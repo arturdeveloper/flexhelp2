@@ -1,41 +1,20 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Header from "./components/Header/Header";
-
+import React, { Component } from "react";
+import "./App.css";
+import Home from "./components/Home/Home";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import UserList from "./components/UserList/UserList";
+import UserEdit from "./components/UserEdit/UserEdit";
 
 class App extends Component {
-  state = {
-    isLoading: true,
-    users: []
-  };
-
-  async componentDidMount() {
-    const response = await fetch('/api/users');
-    const body = await response.json();
-    this.setState({ users: body, isLoading: false });
-  }
-
   render() {
-    const {users, isLoading} = this.state;
-
-    if (isLoading) {
-      return <p>Loading...</p>;
-    }
-
     return (
-      <div className="App">
-        <header className="App-header">
-          <div className="App-intro">
-            <h2>Users List</h2>
-            {users.map(user =>
-              <div key={user.id}>
-                {user.firstName}
-              </div>
-            )}
-          </div>
-        </header>
-      </div>
+      <Router>
+        <Switch>
+          <Route path="/" exact={true} component={Home} />
+          <Route path="/users" exact={true} component={UserList} />
+          <Route path="/users/:id" component={UserEdit} />
+        </Switch>
+      </Router>
     );
   }
 }

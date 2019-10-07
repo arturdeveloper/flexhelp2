@@ -8,8 +8,7 @@ public class FlexhelpApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FlexhelpApplication.class, args);
-		
-		System.out.println("hello boot :)");
+
 	}
 
 }
