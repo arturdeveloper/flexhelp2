@@ -1,20 +1,55 @@
-import React, { Component } from 'react';
-import './Home.css';
-import AppNavbar from "../AppNavbar/AppNavbar"
-import { Link } from 'react-router-dom';
-import { Button, Container } from 'reactstrap';
+/*
+Redux, Thunk way of doing things
+*/
+
+import React, { Component } from "react";
+import AppNavbar from "../AppNavbar/AppNavbar";
+import { Route, Switch } from "react-router-dom";
+import { Container } from "reactstrap";
+import Sidebar from "../Sidebar/Sidebar";
+
+import { connect } from "react-redux";
+import { itemsFetchData } from "../../actions/CatalogItems";
 
 class Home extends Component {
+  componentDidMount() {
+    this.props.fetchData("api/filters");
+  }
+
   render() {
+    const { filters } = this.props;
+
     return (
-      <div>
-        <AppNavbar/>
+      <div className="wrapper">
+        <AppNavbar />
         <Container fluid>
-          <Button color="link"><Link to="/users">Manage Users</Link></Button>
+          <Sidebar {...this.props} routes={filters} />
+          <div id="main-panel" className="main-panel" ref="mainPanel">
+            {/* <Switch>{this.getRoutes(routes)}</Switch> */}
+          </div>
         </Container>
       </div>
     );
   }
 }
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    filters: state.items,
+    // filters: state.filters,
+    hasErrored: state.itemsHasErrored,
+    isLoading: state.itemsIsLoading
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchData: url => dispatch(itemsFetchData(url))
+  };
+};
+
+// export default Home;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);

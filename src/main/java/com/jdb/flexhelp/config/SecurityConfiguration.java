@@ -18,8 +18,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.oauth2Login().and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
-				.authorizeRequests().antMatchers("/**/*.{js,html,css}").permitAll().antMatchers("/", "/api/user", "/api/offers")
-				.permitAll().anyRequest().authenticated();
+				.authorizeRequests().antMatchers("/**/*.{js,html,css}").permitAll()
+				.antMatchers("/", "/api/user", "/api/offers", "/api/**").permitAll().anyRequest().authenticated();
 	}
 
 	@Bean

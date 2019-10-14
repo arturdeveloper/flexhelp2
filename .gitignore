@@ -4,6 +4,7 @@ task
 *.txt
 *.zip
 */bootstrap
+*/fontawesome
 *keep*
 
 HELP.md
