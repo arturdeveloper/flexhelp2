@@ -1,7 +1,7 @@
 /*
 =========================================================
 // Adjust to your application
-
+Uses Route props to display active element
 =========================================================
 */
 import React, { Component } from "react";
@@ -15,7 +15,7 @@ class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: window.innerWidth,
+      width: window.innerWidth
     };
   }
   activeRoute(routeName) {
@@ -29,7 +29,6 @@ class Sidebar extends Component {
     window.addEventListener("resize", this.updateDimensions.bind(this));
   }
   render() {
-
     return (
       <div
         id="sidebar"
@@ -43,32 +42,27 @@ class Sidebar extends Component {
               {/* <img src={logo} alt="logo_image" /> */}
             </div>
           </a>
-          <a href="#" className="simple-text logo-normal">
+          <a href="/offers" className="simple-text logo-normal">
             FlexHelp
           </a>
         </div>
         <div className="sidebar-wrapper">
           <ul className="nav">
-            {/* {this.state.width <= 991 ? <AppNavbar /> : null} */}
-            {/* {this.props.routes.map((prop, key) => { */}
-            {this.props.routes.map((prop, key) => {
-                return (
-                  <li
-                    className={this.activeRoute(prop.layout + prop.path)}
-                    key={key}
+            {this.props.filters.map((prop, key) => {
+              return (
+                <li
+                  className={this.activeRoute(prop.layout + prop.path)}
+                  key={key}
+                >
+                  <NavLink
+                    to={"users"}
+                    className="nav-link"
+                    activeClassName="active"
                   >
-                    <NavLink
-                      // to={prop.layout + prop.path}
-                      // to={prop.path}
-                      to={"users"}
-                      className="nav-link"
-                      activeClassName="active"
-                    >
-                      {/* <p>{prop.name}</p> */}
-                      <p>{prop.catalogTitle}</p>
-                    </NavLink>
-                  </li>
-                );
+                    <p>{prop.catalogTitle}</p>
+                  </NavLink>
+                </li>
+              );
             })}
           </ul>
 

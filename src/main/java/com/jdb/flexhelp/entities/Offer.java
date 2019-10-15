@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class Offer {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	int offerId;
 
 	@OneToOne(cascade = CascadeType.DETACH)

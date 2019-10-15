@@ -1,5 +1,6 @@
 package com.jdb.flexhelp;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import org.springframework.boot.CommandLineRunner;
@@ -36,11 +37,15 @@ public class Initializer implements CommandLineRunner {
 
 //		Catalog catalog1 = catalogRepository.findById(103).get();
 //		ServiceProvider srvProvider1 = providerRepository.findById(101);
-		Stream.of(100, 101, 102, 103, 104)
-				.forEach(id -> offerRepository.save(new Offer(id, 
-						catalogRepository.findById(id).get(),
-						providerRepository.findById(id).get(),
-						id / 10, "location" + id, id - 10)));
+
+		int[] offers = new int[100];
+
+		for (int i = 0; i < 100; i++) {
+			offers[i] = i + 100;
+		}
+		Arrays.stream(offers)
+				.forEach(id -> offerRepository.save(new Offer(id, catalogRepository.findById(id % 4 + 100).get(),
+						providerRepository.findById(id % 4 + 100).get(), id / 10, "location" + id, id - 10)));
 
 		providerRepository.findAll().forEach(System.out::println);
 	}
