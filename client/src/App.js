@@ -8,7 +8,7 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import UserList from "./components/UserList/UserList";
+// import UserList from "./components/UserList/UserList";
 import UserEdit from "./components/UserEdit/UserEdit";
 
 import { Provider } from "react-redux";

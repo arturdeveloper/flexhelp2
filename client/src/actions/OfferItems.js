@@ -1,8 +1,8 @@
-export function itemsHasErrored(bool) {
+export function offersHasErrored(error) {
   return {
     type: "OFFERS_HAS_ERRORED",
-    hasErrored: bool
-    // payload: { error }
+    // hasErrored: bool
+    payload: { error }
   };
 }
 
@@ -35,6 +35,6 @@ export function offersFetchData(url) {
       })
       .then(response => response.json())
       .then(items => dispatch(offersFetchDataSuccess(items)))
-      .catch(() => dispatch(itemsHasErrored(true)));
+      .catch(() => dispatch(offersHasErrored(true)));
   };
 }

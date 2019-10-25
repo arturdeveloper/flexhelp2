@@ -6,8 +6,7 @@ Uses Route props to display active element
 */
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
-import AppNavbar from "../AppNavbar/AppNavbar";
-import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
+import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 
 import "./Sidebar.css";
 
@@ -19,7 +18,7 @@ class Sidebar extends Component {
     };
   }
   activeRoute(routeName) {
-    return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
+    // return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
   }
   updateDimensions() {
     this.setState({ width: window.innerWidth });
@@ -37,7 +36,7 @@ class Sidebar extends Component {
         data-image={this.props.image}
       >
         <div className="logo">
-          <a href="#" className="simple-text logo-mini">
+          <a href="/offers" className="simple-text logo-mini">
             <div className="logo-img">
               {/* <img src={logo} alt="logo_image" /> */}
             </div>

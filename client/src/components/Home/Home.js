@@ -13,22 +13,72 @@ import { connect } from "react-redux";
 import { itemsFetchData } from "../../actions/CatalogItems";
 import { offersFetchData } from "../../actions/OfferItems";
 
+import { withCookies } from "react-cookie";
+
 class Home extends Component {
-  componentDidMount() {
+  state = {
+    isLoading: true,
+    isAuthenticated: false,
+    user: undefined
+  };
+
+  constructor(props) {
+    super(props);
+    const { cookies } = props;
+    this.state.csrfToken = cookies.get("XSRF-TOKEN");
+  }
+
+  login = () => {
+    console.log("from navbar");
+
+    let port = window.location.port ? ":" + window.location.port : "";
+    if (port === ":3000") {
+      port = ":8080";
+    }
+    window.location.href = "//" + window.location.hostname + port + "/private";
+  };
+
+  logout = () => {
+    fetch("/api/logout", {
+      method: "POST",
+      credentials: "include",
+      headers: { "X-XSRF-TOKEN": this.state.csrfToken }
+    })
+      .then(res => res.json())
+      .then(response => {
+        window.location.href =
+          response.logoutUrl +
+          "?id_token_hint=" +
+          response.idToken +
+          "&post_logout_redirect_uri=" +
+          window.location.origin;
+      });
+  };
+
+  async componentDidMount() {
     this.props.fetchData("api/filters");
     this.props.offersFetchData("api/offers");
+
+    const response = await fetch("/api/user", { credentials: "include" });
+    const body = await response.text();
+
+    if (body === "") {
+      this.setState({ isAuthenticated: false });
+    } else {
+      this.setState({ isAuthenticated: true, user: JSON.parse(body) });
+    }
   }
 
   render() {
-    const { offers } = this.props;
-
-    console.log(offers);
+    const { offers, filters } = this.props;
+    const { user } = this.state;
 
     return (
       <div className="wrapper">
-        <AppNavbar />
+        <AppNavbar user={user} login={this.login} logout={this.logout} />
         <Container fluid>
-          <Sidebar {...this.props} />
+          {/* <Sidebar {...this.props} /> */}
+          <Sidebar filters={filters} />
           <div id="main-panel" className="main-panel" ref="mainPanel">
             <Switch>
               <Route
@@ -59,7 +109,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home);
+export default withCookies(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Home)
+);

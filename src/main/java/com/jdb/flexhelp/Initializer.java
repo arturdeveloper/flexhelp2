@@ -30,7 +30,7 @@ public class Initializer implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		Stream.of(100, 101, 102, 103, 104).forEach(id -> providerRepository
-				.save(new ServiceProvider(id, "first" + id, "last" + id, "mail" + id + "@mail.com", "secret")));
+				.save(new ServiceProvider(id, null, "first" + id, "last" + id, "mail" + id + "@mail.com", "secret")));
 
 		Stream.of(100, 101, 102, 103, 104).forEach(
 				id -> catalogRepository.save(new Catalog(id, "title" + id, "desc_of_offer" + id, "unit_oz" + id)));
@@ -43,7 +43,8 @@ public class Initializer implements CommandLineRunner {
 		for (int i = 0; i < 100; i++) {
 			offers[i] = i + 100;
 		}
-		Arrays.stream(offers)
+//		Arrays.stream(offers)
+		Stream.of(100, 101, 102, 103, 104)
 				.forEach(id -> offerRepository.save(new Offer(id, catalogRepository.findById(id % 4 + 100).get(),
 						providerRepository.findById(id % 4 + 100).get(), id / 10, "location" + id, id - 10)));
 

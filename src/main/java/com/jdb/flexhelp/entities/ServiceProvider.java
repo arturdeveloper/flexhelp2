@@ -20,8 +20,8 @@ public class ServiceProvider extends User {
 	}
 
 	@Builder
-	public ServiceProvider(int id, String firstName, String lastName, String email, String password) {
-		super(id, firstName, lastName, email, password);
+	public ServiceProvider(Integer id, String oauthId, String firstName, String lastName, String email, String password) {
+		super(id, oauthId, firstName, lastName, email, password);
 	}
 
 }
