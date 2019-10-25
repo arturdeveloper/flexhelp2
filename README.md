@@ -1,16 +1,21 @@
 
-## Steps to reproduce locally
-Need to add Bootstrap to index.html
+## Description of the issue
+Clicking on top left "FLEXHELP" takes to Route http://localhost:3000/offers and the entire page visibly blanks out for a moment before displaying data. Actual intention is to have the Offers display in its main area without that flicker. Data fetching happens in component Home.js.
 
-## Database
-Uses H2 Database.
-Need to add file in resources with database name and connection
-/src/main/resources/application.properties
+## Running locally
+Prerequisites: Node, Maven.
 
-// example for database
-spring.datasource.url=jdbc:mysql://localhost:3306/testdb
-spring.datasource.username=login
-spring.datasource.password=secret
+### Commands
+After cloning the project run these commands.
+Start the server by running this in the root directory with pom.xml
+```
+mvn spring-boot:run
+```
+This should get necessary dependencies and start the embedded server and DB.
 
-Uses MySql, make sure you have database named "springdb"
-
+Start React part with these
+```
+cd client
+npm install
+npm run start
+```
