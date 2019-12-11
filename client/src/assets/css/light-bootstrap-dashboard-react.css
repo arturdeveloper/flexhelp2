@@ -297,6 +297,22 @@ input:focus {
   background-size: cover;
   background-position: center center;
 }
+
+/* ----------------------------------------------
+my additions
+---------------------------------------------- */
+
+.sidebar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* ----------------------------------------------
+end of my additions
+---------------------------------------------- */
+
 .sidebar .sidebar-wrapper {
   position: relative;
   /* height: calc(100vh - 75px); */

@@ -12,6 +12,7 @@ import OfferList from "../OfferList/OfferList";
 import { connect } from "react-redux";
 import { itemsFetchData } from "../../actions/CatalogItems";
 import { offersFetchData } from "../../actions/OfferItems";
+import { filterOffers } from "../../actions/FilteredOffers";
 
 import { withCookies } from "react-cookie";
 
@@ -19,7 +20,8 @@ class Home extends Component {
   state = {
     isLoading: true,
     isAuthenticated: false,
-    user: undefined
+    user: undefined,
+    isOpen: true
   };
 
   constructor(props) {
@@ -56,7 +58,7 @@ class Home extends Component {
   };
 
   async componentDidMount() {
-    this.props.fetchData("api/filters");
+    this.props.fetchCategories("api/filters");
     this.props.offersFetchData("api/offers");
 
     const response = await fetch("/api/user", { credentials: "include" });
@@ -69,21 +71,53 @@ class Home extends Component {
     }
   }
 
+  toggle = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  };
+
+  callFilter = filterArg => {
+    console.log(filterArg);
+    this.props.filterOffers(this.props.offers, filterArg);
+    // this.props.filterOffers(filterArg);
+    this.props.history.push(`/offers/${filterArg}`);
+  };
+
   render() {
-    const { offers, filters } = this.props;
-    const { user } = this.state;
+    const { offers, filters, filteredOffers } = this.props;
+    const { user, isOpen } = this.state;
+
+    console.log(filteredOffers);
 
     return (
       <div className="wrapper">
         <AppNavbar user={user} login={this.login} logout={this.logout} />
         <Container fluid>
           {/* <Sidebar {...this.props} /> */}
-          <Sidebar filters={filters} />
+          {/* <Sidebar filters={filters} /> */}
+          <Sidebar
+            filters={filters}
+            toggle={this.toggle}
+            isOpen={isOpen}
+            filterOffers={this.callFilter}
+
+            // TODO: pass the method to FilterForm??
+          />
           <div id="main-panel" className="main-panel" ref="mainPanel">
             <Switch>
+              {/* <Route
+                path="/faq"
+                render={() => <Sidebar filters={filters} />}
+              /> */}
               <Route
+                exact
                 path="/offers"
                 render={() => <OfferList offers={offers} />}
+              />
+              <Route
+                path="/offers/:id"
+                // path="/offers/:id?"  // is this better, then remove "exact" above
+                render={() => <OfferList offers={filteredOffers} />}
+                // render={() => <h2>hello there</h2>}
               />
             </Switch>
           </div>
@@ -98,14 +132,16 @@ const mapStateToProps = state => {
     filters: state.items,
     hasErrored: state.itemsHasErrored,
     isLoading: state.itemsIsLoading,
-    offers: state.offers.items
+    offers: state.offers.items,
+    filteredOffers: state.filteredOffers.items
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchData: url => dispatch(itemsFetchData(url)),
-    offersFetchData: url => dispatch(offersFetchData(url))
+    fetchCategories: url => dispatch(itemsFetchData(url)),
+    offersFetchData: url => dispatch(offersFetchData(url)),
+    filterOffers: (offers, criteria) => dispatch(filterOffers(offers, criteria))
   };
 };
 

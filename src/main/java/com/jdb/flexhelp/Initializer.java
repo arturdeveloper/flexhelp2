@@ -43,10 +43,10 @@ public class Initializer implements CommandLineRunner {
 		for (int i = 0; i < 100; i++) {
 			offers[i] = i + 100;
 		}
-//		Arrays.stream(offers)
+		// Arrays.stream(offers)
 		Stream.of(100, 101, 102, 103, 104)
-				.forEach(id -> offerRepository.save(new Offer(id, catalogRepository.findById(id % 4 + 100).get(),
-						providerRepository.findById(id % 4 + 100).get(), id / 10, "location" + id, id - 10)));
+				.forEach(id -> offerRepository.save(new Offer(id, catalogRepository.findById(id % 5 + 100).get(),
+						providerRepository.findById(id % 5 + 100).get(), id / 10, "location" + id, id - 10)));
 
 		providerRepository.findAll().forEach(System.out::println);
 	}

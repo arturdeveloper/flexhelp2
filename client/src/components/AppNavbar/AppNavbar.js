@@ -6,30 +6,17 @@ import {
   NavbarBrand,
   NavbarToggler,
   NavItem,
-  NavLink,
-  Button
+  NavLink
 } from "reactstrap";
 import { Link } from "react-router-dom";
-import { withCookies, Cookies } from "react-cookie";
 
 import "./AppNavbar.css";
 
 class AppNavbar extends Component {
-  static propTypes = {
-    // cookies: instanceOf(Cookies).isRequired
-    // cookies: Cookies
-  };
-
   constructor(props) {
     super(props);
     this.state = { isOpen: false };
     this.toggle = this.toggle.bind(this);
-    const { cookies } = props;
-    this.state = {
-      // csrfToken: cookies.get("XSRF-TOKEN"),
-      isLoading: true
-    };
-    // this.remove = this.remove.bind(this);
   }
 
   toggle() {
@@ -86,4 +73,5 @@ class AppNavbar extends Component {
   }
 }
 
-export default withCookies(AppNavbar);
+// export default withCookies(AppNavbar);
+export default AppNavbar;
